@@ -11,7 +11,7 @@ const useBooks = (page, pageSize, sortField, sortOrder) => {
     const fetchBooks = async () => {
       setLoading(true);
       try {
-        const response = await axios.get('/api/people/mekBot/books/want-to-read.json');
+        const response = await axios.get('https://openlibrary.org/people/mekBot/books/want-to-read.json');
         const readingLogEntries = response.data.reading_log_entries;
 
         // Extract works from reading_log_entries
@@ -21,7 +21,7 @@ const useBooks = (page, pageSize, sortField, sortOrder) => {
         const worksWithDetails = await Promise.all(
           works.map(async (work) => {
             const authorName = work?.author_names[0]?.replace(/\s+/g, '%20'); // Replace spaces with '%20'
-            const authorResponse = await axios.get(`/api/search/authors.json?q=${authorName}`);
+            const authorResponse = await axios.get(`https://openlibrary.org/search/authors.json?q=${authorName}`);
             const authorData = authorResponse.data.docs[0];
 
             return {
